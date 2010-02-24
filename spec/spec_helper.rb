@@ -13,36 +13,37 @@ end
 
 ActiveRecord::Migration.suppress_messages do
   ActiveRecord::Schema.define(:version => 0) do
-    create_table :groups, :force => true do |t|
+    create_table :allocations_schedules, :force => true, :id => false do |t|
+      t.column "allocation_id", :integer
+      t.column "schedule_id", :integer
     end
     
-    create_table :groups_posts, :force => true, :id => false do |t|
-      t.column "group_id", :integer
-      t.column "post_id", :integer
-    end
+    create_table :allocations, :force => true do |t|
+    end  
     
-    create_table :posts, :force => true do |t|
+    create_table :schedule, :force => true do |t|
     end
 
-    create_table :comments, :force => true do |t|
+    create_table :units, :force => true do |t|
       t.column "quality", :integer
-      t.column "post_id", :integer
+      t.column "quantity", :integer
+      t.column "schedule_id", :integer
     end    
   end
 end
 
 # -----  ----- 8< -----  ----- 8< -----  ----- 8< -----  ----- 8< -----  ----- 8< -----  ----- 8< -----  ----- 8< -----  ----- 8< -----  ----- 8< -----  ----- 8< -----  -----
 
-class Comment < ActiveRecord::Base
-  belongs_to :post
+class Unit < ActiveRecord::Base
+  belongs_to :schedule
 end
 
-class Post < ActiveRecord::Base
-  has_and_belongs_to_many :groups
-  has_many :comments
+class Schedule < ActiveRecord::Base
+  has_and_belongs_to_many :allocations
+  has_many :units
 end
 
-class Group < ActiveRecord::Base
-  has_and_belongs_to_many :posts
-  has_many :comments, :through => :posts
+class Allocation < ActiveRecord::Base
+  has_and_belongs_to_many :schedules
+  borrows_many :units, :from => :schedules
 end
