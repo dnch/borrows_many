@@ -21,7 +21,7 @@ ActiveRecord::Migration.suppress_messages do
     create_table :allocations, :force => true do |t|
     end  
     
-    create_table :schedule, :force => true do |t|
+    create_table :schedules, :force => true do |t|
     end
 
     create_table :units, :force => true do |t|

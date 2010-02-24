@@ -15,7 +15,7 @@ describe Allocation do
         schedule.units.create(:quality => rand(100), :quantity => rand(100))
       end
 
-      @allocation.schedules << schedules
+      @allocation.schedules << schedule
     end
   end
 
@@ -28,7 +28,6 @@ describe Allocation do
   end
 
   it "should allow me to make a complex group query" do
-
     # allows us to find them quickly later.
     @indexed_schedules = {}
     @indexed_schedules[@schedule_a.to_param] = @schedule_a
