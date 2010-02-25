@@ -35,7 +35,8 @@ end
 # -----  ----- 8< -----  ----- 8< -----  ----- 8< -----  ----- 8< -----  ----- 8< -----  ----- 8< -----  ----- 8< -----  ----- 8< -----  ----- 8< -----  ----- 8< -----  -----
 
 class Unit < ActiveRecord::Base
-  belongs_to :schedule
+  belongs_to :schedule  
+  named_scope :high_quality, :conditions => ['quality > ?', 50]  
 end
 
 class Schedule < ActiveRecord::Base
