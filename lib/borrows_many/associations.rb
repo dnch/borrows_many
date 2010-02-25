@@ -44,6 +44,10 @@ module BorrowsMany
       # Otherwise, construct options and pass them with scope to the target class's +count+.
       def count(*args)
         column_name, options = @reflection.klass.send(:construct_count_options_from_args, *args)
+
+
+        options[:conditions] = "#{@reflection.quoted_link_table_name}.#{@reflection.join_key_name} = #{owner_quoted_id}"
+        options[:conditions] << " AND (#{conditions})" if conditions
         
         construct_find_options!(options)
 
@@ -61,21 +65,6 @@ module BorrowsMany
 
         super(operation, column_name, options)
       end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       def construct_sql        
         @finder_sql = "#{@reflection.quoted_link_table_name}.#{@reflection.join_key_name} = #{owner_quoted_id}"
