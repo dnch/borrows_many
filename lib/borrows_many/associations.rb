@@ -56,7 +56,7 @@ module BorrowsMany
 
       def calculate(operation, column_name, options = {})
         
-        condtions = options.delete(:conditions)
+        conditions = options.delete(:conditions)
         
         options[:conditions] = "#{@reflection.quoted_link_table_name}.#{@reflection.join_key_name} = #{owner_quoted_id}"
         options[:conditions] << " AND (#{conditions})" if conditions
