@@ -66,6 +66,22 @@ module BorrowsMany
         super(operation, column_name, options)
       end
 
+      def maximum(*args)
+        calculate(:max, *args)
+      end
+
+      def minimum(*args)
+        calculate(:min, *args)
+      end
+
+      def average(*args)
+        calculate(:avg, *args)
+      end
+
+      def sum(*args)
+        calculate(:sum, *args)
+      end
+
       def construct_sql        
         @finder_sql = "#{@reflection.quoted_link_table_name}.#{@reflection.join_key_name} = #{owner_quoted_id}"
         @finder_sql << " AND (#{conditions})" if conditions
