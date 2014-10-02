@@ -56,7 +56,7 @@ module BorrowsMany
 
       def calculate(operation, column_name, options = {})
         
-        condtions = options.delete(:conditions)
+        conditions = options.delete(:conditions)
         
         options[:conditions] = "#{@reflection.quoted_link_table_name}.#{@reflection.join_key_name} = #{owner_quoted_id}"
         options[:conditions] << " AND (#{conditions})" if conditions
@@ -64,6 +64,22 @@ module BorrowsMany
         construct_find_options!(options)
 
         super(operation, column_name, options)
+      end
+
+      def maximum(*args)
+        calculate(:max, *args)
+      end
+
+      def minimum(*args)
+        calculate(:min, *args)
+      end
+
+      def average(*args)
+        calculate(:avg, *args)
+      end
+
+      def sum(*args)
+        calculate(:sum, *args)
       end
 
       def construct_sql        
